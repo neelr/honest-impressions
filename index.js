@@ -112,7 +112,7 @@ app.view("impression_id", async ({ ack, body, view, client }) => {
       token: process.env.SLACK_BOT_TOKEN,
       channel: "C02A6BRM2JD", // #honest-impressions
       thread_ts: view.private_metadata,
-      text: `${getHash(userHash)}: ${view.state.values.input_c.dreamy_input.value}`,
+      text: `${getHash(userHash, { length: 3 })}: ${view.state.values.input_c.dreamy_input.value}`,
     });
   }
 });
