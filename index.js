@@ -23,7 +23,15 @@ const app = new App({
 })();
 app.shortcut("delete_me", async ({ ack, body, say }) => {
   ack();
-  if (body.user.id == "UJYDFQ2QL") {
+  if (
+    [
+      "UJYDFQ2QL",
+      "UHFEGV147",
+      "U01D6FYHLUW",
+      "UM4BAKT6U",
+      "U0128N09Q8Y",
+    ].includes(body.user.id)
+  ) {
     await app.client.chat.delete({
       token: process.env.SLACK_BOT_TOKEN,
       ts: body.message.ts,
