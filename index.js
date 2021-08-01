@@ -1,4 +1,5 @@
 require("dotenv").config();
+const { getHash } = require('emoji-hash-gen')
 const { App } = require("@slack/bolt");
 var Airtable = require("airtable");
 var crypto = require("crypto");
@@ -92,10 +93,11 @@ app.shortcut("reply_impression", async ({ ack, body, say }) => {
 });
 
 app.view("impression_id", async ({ ack, body, view, client }) => {
+  const userHash = crypto.createHash("md5").update(body.user.id).digest("hex")
   await base("Messages").create([
     {
       fields: {
-        hash: crypto.createHash("md5").update(body.user.id).digest("hex"),
+        hash: userHash,
         message: view.state.values.input_c.dreamy_input.value,
       },
     },
@@ -103,14 +105,14 @@ app.view("impression_id", async ({ ack, body, view, client }) => {
   ack();
   if (
     !banned.includes(
-      crypto.createHash("md5").update(body.user.id).digest("hex")
+      userHash
     )
   ) {
     app.client.chat.postMessage({
       token: process.env.SLACK_BOT_TOKEN,
-      channel: "C02A6BRM2JD",
+      channel: "C02A6BRM2JD", // #honest-impressions
       thread_ts: view.private_metadata,
-      text: view.state.values.input_c.dreamy_input.value,
+      text: `${getHash(userHash)}: ${view.state.values.input_c.dreamy_input.value}`,
     });
   }
 });
