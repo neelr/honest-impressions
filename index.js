@@ -54,6 +54,7 @@ app.shortcut("delete_me", async ({ ack, body, say }) => {
 });
 app.shortcut("reply_impression", async ({ ack, body, say }) => {
   await ack();
+  /* 
   if (body.channel.id !== "C02A6BRM2JD") {
     await app.client.chat.postEphemeral({
       token: process.env.SLACK_BOT_TOKEN,
@@ -63,6 +64,7 @@ app.shortcut("reply_impression", async ({ ack, body, say }) => {
     });
     return;
   }
+  */
 
   await app.client.views.open({
     // Pass a valid trigger_id within 3 seconds of receiving it
