@@ -96,7 +96,7 @@ app.shortcut("reply_impression", async ({ ack, body, say }) => {
         type: "plain_text",
         text: "Submit",
       },
-      private_metadata: body.message_ts,
+      private_metadata: `${body.message_ts}|${body.channel.id}`,
     },
   });
 });
@@ -115,8 +115,8 @@ app.view("impression_id", async ({ ack, body, view, client }) => {
   if (!banned.includes(userHash)) {
     app.client.chat.postMessage({
       token: process.env.SLACK_BOT_TOKEN,
-      channel: "C02A6BRM2JD", // #honest-impressions
-      thread_ts: view.private_metadata,
+      channel: view.private_metadata.split("|")[1], // #honest-impressions
+      thread_ts: view.private_metadata.split("|")[0],
       text: view.state.values.input_c.dreamy_input.value,
     });
   }
