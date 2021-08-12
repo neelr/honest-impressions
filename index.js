@@ -117,7 +117,7 @@ app.view("impression_id", async ({ ack, body, view, client }) => {
       token: process.env.SLACK_BOT_TOKEN,
       channel: view.private_metadata.split("|")[1], // #honest-impressions
       thread_ts: view.private_metadata.split("|")[0],
-      text: view.state.values.input_c.dreamy_input.value,
+      text: view.private_metadata.split("|")[1] == "C02A6BRM2JD" ? view.state.values.input_c.dreamy_input.value : `${view.state.values.input_c.dreamy_input.value} I'm mr meeseeeks look at meee`
     });
   }
 });
