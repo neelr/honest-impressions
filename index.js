@@ -55,7 +55,7 @@ app.shortcut("delete_me", async ({ ack, body, say }) => {
 app.shortcut("reply_impression", async ({ ack, body, say }) => {
   await ack();
 
-  if (body.channel.id !== "C02A6BRM2JD" && !["U01LY8S46US", "UJYDFQ2QL", "U0161JDSHGR", "U01VDAQB99P", "U011CFN98K1"].includes(body.user.id)) {
+  if (body.channel.id !== "C02A6BRM2JD" && !["UJYDFQ2QL"].includes(body.user.id)) {
     await app.client.chat.postEphemeral({
       token: process.env.SLACK_BOT_TOKEN,
       channel: body.channel.id,
