@@ -55,7 +55,10 @@ app.shortcut("delete_me", async ({ ack, body, say }) => {
 app.shortcut("reply_impression", async ({ ack, body, say }) => {
   await ack();
 
-  if (body.channel.id !== "C02A6BRM2JD" && !["UJYDFQ2QL"].includes(body.user.id)) {
+  if (
+    !["C02A6BRM2JD", "G01PPVD14Q0"].includes(body.channel.id) &&
+    !["UJYDFQ2QL"].includes(body.user.id)
+  ) {
     await app.client.chat.postEphemeral({
       token: process.env.SLACK_BOT_TOKEN,
       channel: body.channel.id,
@@ -117,7 +120,10 @@ app.view("impression_id", async ({ ack, body, view, client }) => {
       token: process.env.SLACK_BOT_TOKEN,
       channel: view.private_metadata.split("|")[1], // #honest-impressions
       thread_ts: view.private_metadata.split("|")[0],
-      text: view.private_metadata.split("|")[1] == "C02A6BRM2JD" ? view.state.values.input_c.dreamy_input.value : `${view.state.values.input_c.dreamy_input.value} I'm mr meeseeeks look at meee`
+      text:
+        view.private_metadata.split("|")[1] == "C02A6BRM2JD"
+          ? view.state.values.input_c.dreamy_input.value
+          : `${view.state.values.input_c.dreamy_input.value} I'm mr meeseeeks look at meee`,
     });
   }
 });
